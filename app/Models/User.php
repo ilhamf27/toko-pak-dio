@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -16,8 +17,21 @@ class User extends Authenticatable
      *
      * @var array
      */
+
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
+    public static function boot(){
+        parent::boot();
+
+        static::creating(function ($issue) {
+            $issue->id = Str::uuid(36);
+        });
+    }
+
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','saldo'
     ];
 
     /**

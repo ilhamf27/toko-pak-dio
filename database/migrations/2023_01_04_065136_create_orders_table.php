@@ -14,9 +14,9 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id', 36)->primary();
             $table->foreignId('user_id');
-            $table->enum('status', ['dibayar','dikirim','diterima'] );
+            $table->enum('status', ['dibayar','dikirim','diterima'])->default('dibayar');
             $table->text('delivery_address');
             $table->timestamps();
         });

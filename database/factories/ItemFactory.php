@@ -14,7 +14,11 @@ class ItemFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'id' => $this->faker->unique()->uuid,
+            'name' => $this->faker->title,
+            'description' => $this->faker->text(180),
+            'stock_qty' => $this->faker->numberBetween(0,250),
+            'price' => $this->faker->numberBetween(10000,100000),
         ];
     }
 }

@@ -14,7 +14,7 @@ class CreateItemsTable extends Migration
     public function up()
     {
         Schema::create('items', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id', 36)->primary();
             $table->string('name')->unique();
             $table->text('description');
             $table->integer('stock_qty');

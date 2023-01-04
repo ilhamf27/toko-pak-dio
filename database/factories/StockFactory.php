@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Item;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class StockFactory extends Factory
@@ -14,7 +15,9 @@ class StockFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'id' => $this->faker->unique()->uuid,
+            'item_id' => Item::factory(),
+            'qty' => $this->faker->numberBetween(1,100),
         ];
     }
 }
