@@ -25,8 +25,4 @@ class Order extends Model
     protected $fillable = [
         'delivery_address',
     ];
-
-    protected $casts = [
-        'status' => OrderStatusEnum::class
-    ];
 }

@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Enums\OrderStatusEnum;
 
 class OrderFactory extends Factory
 {
@@ -20,7 +19,6 @@ class OrderFactory extends Factory
         return [
             'id' => $this->faker->unique()->uuid,
             'user_id' => User::factory(),
-            'status'=> OrderStatusEnum::class,
             'delivery_address' => $this->faker->address,
         ];
     }

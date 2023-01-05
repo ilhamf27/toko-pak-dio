@@ -15,7 +15,7 @@ class CreateStocksTable extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->uuid('id', 36)->primary();
-            $table->foreignId('item_id');
+            $table->foreignUuid('item_id', 36);
             $table->integer('qty');
             $table->timestamps();
         });
