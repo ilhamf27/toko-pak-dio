@@ -13,7 +13,7 @@
             </form>
             <ul class="navbar-nav mx-4">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    <a class="nav-link {{ (Request::path() === 'home') ? 'active':'' }}" aria-current="page" href="/home">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="" data-bs-toggle="offcanvas"
@@ -22,10 +22,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/riwayat">Riwayat</a>
+                    <a class="nav-link {{ (Request::path() === 'riwayat') ? 'active':'' }}" href="/riwayat">Riwayat</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Setting</a>
+                    <a class="nav-link" href="/">Log Out</a>
                 </li>
             </ul>
         </div>

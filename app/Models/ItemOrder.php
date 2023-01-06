@@ -25,4 +25,14 @@ class ItemOrder extends Model
     protected $fillable = [
         'qty',
     ];
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }
 }

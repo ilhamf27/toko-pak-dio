@@ -25,4 +25,9 @@ class Stock extends Model
     protected $fillable = [
         'qty',
     ];
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }
 }

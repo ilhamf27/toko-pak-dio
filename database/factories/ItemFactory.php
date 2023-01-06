@@ -15,7 +15,7 @@ class ItemFactory extends Factory
     {
         return [
             'id' => $this->faker->unique()->uuid,
-            'name' => $this->faker->title,
+            'name' => $this->faker->unique()->text(20),
             'description' => $this->faker->text(180),
             'stock_qty' => $this->faker->numberBetween(0,250),
             'price' => $this->faker->numberBetween(10000,100000),

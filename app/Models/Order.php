@@ -25,4 +25,9 @@ class Order extends Model
     protected $fillable = [
         'delivery_address',
     ];
+
+    public function item_order()
+    {
+        return $this->hasMany(ItemOrder::class);
+    }
 }

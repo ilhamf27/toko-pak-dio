@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Item;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +16,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('login');
+});
+
+Route::get('/home', function () {
+    return view('home', [
+        'items' => Item::all()
+    ]);
 });
 
 Route::get('/riwayat', function () {
-    return view('history');
+
+    // ddd(Order::all());
+    return view('history', [
+        'orders' => Order::all()->where('status')
+    ]);
 });

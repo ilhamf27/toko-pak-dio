@@ -25,4 +25,16 @@ class Item extends Model
     protected $fillable = [
         'name', 'description', 'stock_qty', 'price',
     ];
+
+    public function item_order()
+    {
+        # code...
+        return $this->hasMany(ItemOrder::class);
+    }
+
+    public function stock()
+    {
+        # code...
+        return $this->hasMany(Stock::class);
+    }
 }
