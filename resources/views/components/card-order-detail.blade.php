@@ -1,5 +1,5 @@
 @props(['order'])
-<div class="card tab-pane fade show active" id="list-{{ $order->id }}" role="tabpanel"
+<div class="card tab-pane fade show" id="list-{{ $order->id }}" role="tabpanel"
     aria-labelledby="list-{{ $order->id }}-list">
     <div class="card-header flex justify-content-between">
         <div>
@@ -8,11 +8,28 @@
             </span>
             {{ $order->delivery_address }}
         </div>
-        <a href="#" class="btn btn-outline-info btn-sm mt-auto mb-auto">Barang Telah Diterima</a>
+        @if ($order->status === 'dikirim')
+            <form action="/accepted/{{ $order->id }}" method="POST">
+                @csrf
+                @method('PATCH')
+                <button href="#" class="btn btn-outline-info btn-sm mt-auto mb-auto">Barang Telah Diterima</button>
+            </form>
+        @endif
     </div>
     <div class="card-body">
         <div class="d-flex mb-2 justify-content-end">
-            <span class="badge rounded-pill text-bg-info">status</span>
+            @switch($order->status)
+                @case('dibayar')
+                    <span class="badge rounded-pill text-bg-info mt-auto mb-auto">{{ $order->status }}</span>
+                @break
+
+                @case('dikirim')
+                    <span class="badge rounded-pill text-bg-warning mt-auto mb-auto">{{ $order->status }}</span>
+                @break
+
+                @default
+                    <span class="badge rounded-pill text-bg-success mt-auto mb-auto">{{ $order->status }}</span>
+            @endswitch
         </div>
         <div class="row mb-3">
             <div class="col col-md-6">
@@ -25,7 +42,7 @@
                     <div class="col col-md-1">:</div>
                     <div class="col col-md-7">
                         <span class="mt-2 block text-gray-400 text-xs">
-                            Tgl Nya disini
+                            {{ $order->created_at }}
                         </span>
                     </div>
                 </div>
@@ -51,12 +68,13 @@
             @foreach ($order->item_order as $item_order)
                 <li class="list-group-item">
                     <div class="row">
-                        <label for="staticEmail" class="col-sm-4 col-form-label">{{ $item_order->name }}</label>
+                        <label for="staticEmail" class="col-sm-4 col-form-label">{{ $item_order->item->name }}</label>
                         <div class="col-sm-4">
-                            <input type="text" readonly class="form-control-plaintext" value="banyak item">
+                            <input type="text" readonly class="form-control-plaintext"
+                                value="{{ $item_order->qty }}">
                         </div>
                         <div class="col-sm-4 d-flex align-items-center">
-                            {{ $item_order->price }}
+                            Rp {{ number_format($item_order->item->price, 2, ',', '.') }}
                         </div>
                     </div>
                 </li>
@@ -74,7 +92,15 @@
             <div class="col col-md-4 d-flex align-items-end flex-column">
                 <div class="ml-auto">
 
-                    <b>Rp 100,000.00</b>
+                    <b>
+                        @php
+                            $price_final = 0;
+                            foreach ($order->item_order as $item_order) {
+                                $price_final = $price_final+($item_order->qty * $item_order->item->price);
+                            }
+                        @endphp
+                        Rp {{ number_format($price_final, 2, ',', '.') }}
+                    </b>
                 </div>
             </div>
         </div>

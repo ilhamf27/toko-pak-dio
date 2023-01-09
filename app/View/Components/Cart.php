@@ -11,9 +11,11 @@ class Cart extends Component
      *
      * @return void
      */
-    public function __construct()
+    public $carts;
+    public function __construct($carts)
     {
         //
+        $this->carts = $carts;
     }
 
     /**

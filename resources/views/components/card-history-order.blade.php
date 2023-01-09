@@ -1,5 +1,5 @@
 @props(['order'])
-<div class="card list-group-item-action active mb-2 p-3" id="list-{{ $order->id }}-list" data-bs-toggle="list"
+<div class="card list-group-item-action mb-2 p-3" id="list-{{ $order->id }}-list" data-bs-toggle="list"
     href="#list-{{ $order->id }}" role="tab" aria-controls="list-{{ $order->id }}">
     <div class="flex justify-content-between">
         <div>
@@ -31,7 +31,15 @@
         <div class="col col-md-8 d-flex align-items-end flex-column">
             <div class="ml-auto">
 
-                <b>{{ $order->id }}</b>
+                <b>
+                    @php
+                        $price_final = 0;
+                        foreach ($order->item_order as $item_order) {
+                            $price_final = $price_final+($item_order->qty * $item_order->item->price);
+                        }
+                    @endphp
+                    Rp {{ number_format($price_final, 2, ',', '.') }}
+                </b>
             </div>
         </div>
     </div>

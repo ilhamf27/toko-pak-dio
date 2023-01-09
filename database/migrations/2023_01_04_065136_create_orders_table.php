@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->uuid('id', 36)->primary();
             $table->foreignUuid('user_id', 36);
             $table->enum('status', ['dibayar','dikirim','diterima'])->nullable(true)->default(null);
-            $table->text('delivery_address');
+            $table->text('delivery_address')->nullable(true)->default(null);
             $table->timestamps();
         });
     }

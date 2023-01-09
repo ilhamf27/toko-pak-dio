@@ -6,10 +6,9 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-            <form class="d-flex mx-auto mb-2 mb-lg-0">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                    id="navBarSearchForm">
-                <button class="btn btn-outline-light" type="submit">Search</button>
+            <form method="GET" class="d-flex mx-auto mb-2 mb-lg-0">
+                <input class="form-control me-2" type="text" placeholder="Find Something" aria-label="Search"
+                    id="navBarSearchForm" name="search">
             </form>
             <ul class="navbar-nav mx-4">
                 <li class="nav-item">
@@ -25,7 +24,10 @@
                     <a class="nav-link {{ (Request::path() === 'riwayat') ? 'active':'' }}" href="/riwayat">Riwayat</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Log Out</a>
+                    <form action="/logout" method="POST">
+                        @csrf
+                        <button class="nav-link" type="submit">Log Out</button>
+                    </form>
                 </li>
             </ul>
         </div>

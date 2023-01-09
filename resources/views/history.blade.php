@@ -8,12 +8,12 @@
                     <x-card-history-order :order=$order/>
                     @endforeach
                 </div>
-                <x-pagination />
+                {{ $orders->links() }}
             </div>
             <div class="col col-md-6 flex align-items-stretch">
                 <div class="tab-content flex-fill" id="nav-tabContent">
                     {{-- @for ($i = 0; $i < 1; $i++) --}}
-                    @foreach (orders as $order)
+                    @foreach ($orders as $order)
                     <x-card-order-detail :order=$order/>
                     @endforeach
                     {{-- @endfor --}}
@@ -21,4 +21,5 @@
             </div>
         </div>
     </div>
+    <x-cart :carts=$carts/>
 </x-layout>

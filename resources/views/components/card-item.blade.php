@@ -1,7 +1,10 @@
 @props(['item'])
 
 <article
-    class="transition-colors duration-300 hover:bg-gray-100 border border-black border-opacity-0 hover:border-opacity-5 rounded-xl me-4 mt-4">
+    class="transition-colors duration-300 hover:bg-gray-100 border border-black border-opacity-0 hover:border-opacity-5 rounded-xl me-4 mt-4"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#offcanvasItemDetail{{ $item->id }}"
+    aria-controls="offcanvasItemDetail{{ $item->id }}">
     <div class="py-6 px-5" style="height: 100%">
         <div>
             <img src="https://th.bing.com/th/id/OIP.R6QCqPeQws4yCEnbpc4JowHaIW?pid=ImgDet&rs=1"
@@ -15,7 +18,7 @@
                 </h1>
 
                 <span class="mt-2 block text-gray-400">
-                    {{ $item->price }}
+                    Rp {{ number_format($item->price, 2, ',', '.') }}
                 </span>
             </div>
         </header>

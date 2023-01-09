@@ -4,16 +4,28 @@
             Toko Pak Dio
         </div>
         <div class="card-body">
-            <form class="form">
+            <form action="/" method="POST">
+                @csrf
+
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email" required>
                     <label for="floatingInput">Email</label>
                 </div>
+                @error('email')
+                <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                @enderror
+
                 <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
                     <label for="floatingPassword">Password</label>
                 </div>
-                <a href="/home" class="btn btn-primary block mt-4">Login</a>
+                @error('password')
+                <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                @enderror
+
+                <div class="d-flex flex-column">
+                    <button class="btn btn-primary block mt-4" type="submit">Login</button>
+                </div>
             </form>
         </div>
     </div>

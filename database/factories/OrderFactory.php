@@ -19,7 +19,6 @@ class OrderFactory extends Factory
         return [
             'id' => $this->faker->unique()->uuid,
             'user_id' => User::factory(),
-            'delivery_address' => $this->faker->address,
         ];
     }
 }

@@ -14,7 +14,8 @@ class Item extends Model
 
     protected $keyType = 'string';
 
-    public static function boot(){
+    public static function boot()
+    {
         parent::boot();
 
         static::creating(function ($issue) {
@@ -36,5 +37,15 @@ class Item extends Model
     {
         # code...
         return $this->hasMany(Stock::class);
+    }
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? false, function($query, $search){
+            $query
+                ->where('name', 'like', '%' . $search . '%')
+                ->orWhere('description', 'like', '%' . $search . '%');
+        });
+
     }
 }

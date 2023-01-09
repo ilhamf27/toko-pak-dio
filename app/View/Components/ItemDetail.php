@@ -4,17 +4,18 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class CardOrderItems extends Component
+class ItemDetail extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public $cart;
-    public function __construct($cart)
+    public $item;
+    public function __construct($item)
     {
-        $this->cart = $cart;
+        //
+        $this->item = $item;
     }
 
     /**
@@ -24,6 +25,6 @@ class CardOrderItems extends Component
      */
     public function render()
     {
-        return view('components.card-order-items');
+        return view('components.item-detail');
     }
 }

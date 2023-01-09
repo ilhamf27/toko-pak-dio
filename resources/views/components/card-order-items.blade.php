@@ -1,3 +1,4 @@
+@props(['cart'])
 <div class="card mb-3" style="max-width: 100%;">
     <div class="row g-0 px-2">
         <div class="col-md-3 my-auto flex">
@@ -14,13 +15,24 @@
         </div>
         <div class="col-md-7">
             <div class="card-body">
-                <h5 class="card-title">Nama Item</h5>
-                <p class="card-text"><small class="text-muted">Harga</small></p>
+                <h5 class="card-title">{{ $cart->item->name }}</h5>
+                <p class="card-text">
+                    {{-- {{ $cart->id }} --}}
+                    <small class="text-muted">
+                        Rp {{ number_format($cart->item->price, 2, ',', '.') }}
+                    </small>
+                </p>
             </div>
         </div>
         <div class="col-md-2 my-auto">
-            <input type="number" class="form-control" placeholder="" aria-label="Example text with button addon"
-                aria-describedby="button-addon1">
+            <input
+                type="number"
+                class="form-control"
+                placeholder=""
+                aria-label="Example text with button addon"
+                aria-describedby="button-addon1"
+                value="{{ $cart->qty }}"
+            >
         </div>
     </div>
 </div>

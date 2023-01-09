@@ -1,7 +1,8 @@
 <?php
 
-use App\Models\Item;
-use App\Models\Order;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,20 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('login');
-});
+Route::get('/', [UserController::class, 'checkin'])->middleware('guest');
+Route::post('/', [UserController::class, 'store'])->middleware('guest');
+Route::post('/logout', [UserController::class, 'destroy'])->middleware('auth');
 
-Route::get('/home', function () {
-    return view('home', [
-        'items' => Item::all()
-    ]);
-});
+Route::get('/home', [ItemController::class, 'index'])->name('home')->middleware('auth');
 
-Route::get('/riwayat', function () {
-
-    // ddd(Order::all());
-    return view('history', [
-        'orders' => Order::all()->where('status')
-    ]);
-});
+Route::get('/riwayat', [OrderController::class, 'riwayat']);
+Route::patch('/accepted/{order}', [OrderController::class, 'diterima'])->middleware('auth');
+Route::patch('/checkout/{order}', [OrderController::class, 'checkout'])->middleware('auth');
