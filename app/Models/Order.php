@@ -23,7 +23,7 @@ class Order extends Model
     }
 
     protected $fillable = [
-        'delivery_address',
+        'delivery_address','user_id'
     ];
 
     public function item_order()

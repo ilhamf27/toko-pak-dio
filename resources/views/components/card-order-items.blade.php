@@ -31,6 +31,7 @@
                 placeholder=""
                 aria-label="Example text with button addon"
                 aria-describedby="button-addon1"
+                readonly
                 value="{{ $cart->qty }}"
             >
         </div>

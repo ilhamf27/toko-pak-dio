@@ -23,7 +23,7 @@ class ItemOrder extends Model
     }
 
     protected $fillable = [
-        'qty',
+        'qty', 'order_id', 'item_id'
     ];
 
     public function order()

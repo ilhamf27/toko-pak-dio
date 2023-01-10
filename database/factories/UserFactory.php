@@ -28,6 +28,7 @@ class UserFactory extends Factory
             'username' => $this->faker->unique()->userName,
             'name' => $this->faker->unique()->name,
             'saldo' => $this->faker->numberBetween(100000,900000),
+            'is_admin' => $this->faker->boolean(),
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
             'password' => Hash::make('password'), // password

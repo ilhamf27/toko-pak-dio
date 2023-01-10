@@ -13,34 +13,38 @@
             @foreach ($carts as $cart)
                 <x-card-order-items :cart=$cart />
             @endforeach
+            @php
+                $orderId = "";
+                $price_final = 0;
+                foreach ($carts as $item_order) {
+                    $orderId = $item_order->order->id;
+                    $price_final = $price_final + $item_order->qty * $item_order->item->price;
+                }
+            @endphp
 
-            <div class="card mt-auto" style="width: 100%;">
-                <div class="form-floating">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-                    <label for="floatingTextarea2">Alamat Pengiriman</label>
-                </div>
+            <form action="/checkout/{{ $orderId }}" method="POST" class="d-flex align-items-start flex-column" style="height: 100%; width:100%">
 
-                <div class="card-footer">
-                    <div class="flex">
-                        <div class="me-auto"><b>Grand Total</b></div>
-                        <div>
-                            @php
-                            $price_final = 0;
-                            $order_id = "";
-                            foreach ($carts as $item_order) {
-                                $order_id = $item_order->order->id;
-                                $price_final = $price_final+($item_order->qty*$item_order->item->price);
-                            }
-                            @endphp
-                            Rp {{ number_format($price_final, 2, ',', '.') }}
+                {{-- {{ head($carts) }} --}}
+                @csrf
+                @method('PATCH')
+                <div class="card mt-auto" style="width: 100%;">
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="alamat" name="alamat" style="height: 100px"
+                            required></textarea>
+                        <label for="floatingTextarea2">Alamat Pengiriman</label>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="flex">
+                            <div class="me-auto"><b>Grand Total</b></div>
+                            <div>
+                                Rp {{ number_format($price_final, 2, ',', '.') }}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <form action="/checkout/{{ $order_id }}" method="POST">
-                @csrf
-                @method('PATCH')
-                <button class="btn btn-primary btn-block mt-2" type="submit">Checkout</button>
+
+                <button class="btn btn-primary btn-block mt-2" style="width:inherit;" type="submit">Checkout</button>
             </form>
 
         </div>

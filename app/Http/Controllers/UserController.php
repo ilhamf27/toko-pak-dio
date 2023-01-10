@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
@@ -21,6 +22,10 @@ class UserController extends Controller
         if(auth()->attempt($attributes)){
             session()->regenerate();
 
+            if(Auth::user()->is_admin){
+                return redirect('/dashboard')->with('success', 'Selamat Datang Kembali '. Auth::user()->name.'!');
+            }
+
             return redirect('/home')->with('success', 'Selamat Datang Kembali di Toko Pak Dio!');
         }
 
@@ -32,7 +37,7 @@ class UserController extends Controller
     public function destroy()
     {
         auth()->logout();
-        
-        return redirect('/')->with('success', 'Selamat Tinggal!');
+
+        return redirect('/')->with('success', 'Terima kasih telah berkunjung, Silahkan datang kembali!');
     }
 }

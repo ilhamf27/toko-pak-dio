@@ -21,7 +21,9 @@ Route::post('/', [UserController::class, 'store'])->middleware('guest');
 Route::post('/logout', [UserController::class, 'destroy'])->middleware('auth');
 
 Route::get('/home', [ItemController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/dashboard', [ItemController::class, 'dashboard'])->name('dashboard')->middleware('auth');
 
 Route::get('/riwayat', [OrderController::class, 'riwayat']);
 Route::patch('/accepted/{order}', [OrderController::class, 'diterima'])->middleware('auth');
 Route::patch('/checkout/{order}', [OrderController::class, 'checkout'])->middleware('auth');
+Route::patch('/tambah-item/{item}', [OrderController::class, 'tambah_item'])->middleware('auth');

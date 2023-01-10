@@ -1,5 +1,5 @@
 <x-layout>
-    <x-navbar />
+    <x-navbar :user=$user/>
     <div class="container py-4">
         <div class="row">
             <div class="col col-md-6">
