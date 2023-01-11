@@ -8,11 +8,11 @@
             </span>
             {{ $order->delivery_address }}
         </div>
-        @if ($order->status === 'dikirim')
-            <form action="/accepted/{{ $order->id }}" method="POST">
+        @if ($order->status === 'dibayar')
+            <form action="/delivered/{{ $order->id }}" method="POST" class="mt-auto mb-auto">
                 @csrf
                 @method('PATCH')
-                <button href="#" class="btn btn-outline-info btn-sm mt-auto mb-auto">Barang Telah Diterima</button>
+                <button href="#" class="btn btn-outline-info btn-sm">Kirim Barang</button>
             </form>
         @endif
     </div>
@@ -57,30 +57,39 @@
                     <div class="col col-md-1">:</div>
                     <div class="col col-md-7">
                         <span class="mt-2 block text-gray-400 text-xs">
-                            {{ $order->status=='diterima' ? $order->updated_at : "-"}}
+                            {{ $order->status == 'diterima' ? $order->updated_at : '-' }}
                         </span>
                     </div>
                 </div>
             </div>
         </div>
-        <ul class="list-group list-group-flush">
-            {{-- @for ($i = 0; $i < 5; $i++) --}}
-            @foreach ($order->item_order as $item_order)
-                <li class="list-group-item">
-                    <div class="row">
-                        <label for="staticEmail" class="col-sm-4 col-form-label">{{ $item_order->item->name }}</label>
-                        <div class="col-sm-4">
-                            <input type="text" readonly class="form-control-plaintext"
-                                value="{{ $item_order->qty }}">
-                        </div>
-                        <div class="col-sm-4 d-flex align-items-center">
-                            Rp {{ number_format($item_order->item->price, 2, ',', '.') }}
-                        </div>
-                    </div>
-                </li>
-            @endforeach
-            {{-- @endfor --}}
-        </ul>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nama Barang</th>
+                    <th scope="col">Harga</th>
+                    <th scope="col">Jumlah (pcs)</th>
+                    <th scope="col">Sub Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for ($i = 1; $i - 1 < count($order->item_order); $i++)
+                    <tr>
+                        <th scope="row">{{ $i }}</th>
+                        <td>{{ $order->item_order[$i-1]->item->name }}</td>
+                        <td>{{ $order->item_order[$i-1]->item->price }}</td>
+                        <td>
+                            {{ $order->item_order[$i-1]->qty }}
+                        </td>
+                        <td>
+                            Rp {{ number_format($order->item_order[$i-1]->qty * $order->item_order[$i-1]->item->price, 2, ',', '.') }}
+                        </td>
+                    </tr>
+                @endfor
+            </tbody>
+        </table>
     </div>
     <div class="card-footer text-muted">
         <div class="row">
@@ -96,7 +105,7 @@
                         @php
                             $price_final = 0;
                             foreach ($order->item_order as $item_order) {
-                                $price_final = $price_final+($item_order->qty * $item_order->item->price);
+                                $price_final = $price_final + $item_order->qty * $item_order->item->price;
                             }
                         @endphp
                         Rp {{ number_format($price_final, 2, ',', '.') }}

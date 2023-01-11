@@ -7,6 +7,7 @@ use App\Models\ItemOrder;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\If_;
 
 class OrderController extends Controller
@@ -14,15 +15,38 @@ class OrderController extends Controller
     public function riwayat()
     {
         return view('history', [
-            'orders' => Order::where('user_id','=', Auth::id())->paginate(5),
+            'orders' => Order::where('user_id','=', Auth::id())->whereIn('status', ['dibayar', 'diterima', 'dikirim'])->paginate(5),
             'carts' => ItemOrder::with('order')->get()->where('order.user_id', '=', Auth::id())->where('order.status','=',null),
             'user' => Auth::user()
         ]);
     }
 
+    public function laporan()
+    {
+
+        $sql = `
+        SELECT orders.created_at as waktu, COUNT(orders.user_id) as jml_user, COUNT(orders.id) as jml_order, SUM(item_orders.qty) as jml_item, SUM(orders.grand_total) as pendapatan
+        FROM orders JOIN item_orders ON orders.id=item_orders.order_id JOIN items ON item_orders.item_id=items.id
+        GROUP BY waktu
+        `;
+        $orders = Order::select(DB::raw('orders.created_at, count(orders.user_id) as jml_user, count(orders.id) as jml_order, SUM(item_orders.qty) as jml_item, SUM(orders.grand_total) as pendapatan'))->join('item_orders', 'item_orders.order_id', '=', 'orders.id')->join('items', 'item_orders.item_id', '=', 'itesm.id')->groupBy('orders.created_at')
+        ->get();
+
+        dd($orders);
+
+        return view('laporan');
+    }
+
     public function diterima(Order $order)
     {
         Order::where('id', $order->id)->update(array('status'=>"diterima"));
+
+        return back()->with('success', 'Status Berhasil diupdate');
+    }
+
+    public function dikirim(Order $order)
+    {
+        Order::where('id', $order->id)->update(array('status'=>"dikirim"));
 
         return back()->with('success', 'Status Berhasil diupdate');
     }
@@ -60,11 +84,17 @@ class OrderController extends Controller
             'alamat' => 'required|min:10',
         ]);
 
+        date_default_timezone_set("Asia/Jakarta");
+        $formatted = date('y-m-d h:i:s');
+
         Order::where('id', $order->id)->update(array(
             'status'=>"dibayar",
+            'created_at' => $formatted,
+            'delivery_address' => $attributes['alamat'],
+            'grand_total' => $price_final
         ));
 
-        $order->update($attributes);
+        // $order->update($attributes);
 
         User::where('id', $existUser->id)->update(array(
             'saldo'=>$saldoAkhir
@@ -80,7 +110,7 @@ class OrderController extends Controller
 
     public function tambah_item(Item $item)
     {
-        $checkOrder = Order::where('user_id','=',Auth::id())->get()->where('status', '=', null);
+        $checkOrder = Order::query()->where('user_id', '=', Auth::id())->whereNull('status')->get();
 
         $count = 0;
         $existItemOrder = null;
@@ -123,5 +153,13 @@ class OrderController extends Controller
 
         return back()->with('success', 'Berhasil menambahkan barang ke keranjang!');
 
+    }
+
+    public function dashboard()
+    {
+        return view('dashboard', [
+            'orders' => Order::sortable()->get()->whereIn('status', ['dibayar', 'diterima', 'dikirim']),
+            'user' => Auth::user()
+        ]);
     }
 }

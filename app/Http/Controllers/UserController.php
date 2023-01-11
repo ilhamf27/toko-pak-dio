@@ -12,6 +12,11 @@ class UserController extends Controller
         return view('login');
     }
 
+    public function list_user()
+    {
+        return view('manajemen-user');
+    }
+
     public function store()
     {
         $attributes = request()->validate([

@@ -26,12 +26,9 @@ class ItemController extends Controller
             'user' => Auth::user()
         ]);
     }
-    public function dashboard()
+
+    public function stok_item()
     {
-        return view('dashboard', [
-            'items' => Item::latest()->filter(request(['search']))->paginate(10),
-            'carts' => ItemOrder::with('order')->get()->where('order.user_id', '=', Auth::id())->where('order.status', '=', null),
-            'user' => Auth::user()
-        ]);
+        return view('stok');
     }
 }

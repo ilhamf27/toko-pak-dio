@@ -4,17 +4,16 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class TabelTransaksi extends Component
+class TabelUser extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public $orders;
-    public function __construct($orders)
+    public function __construct()
     {
-        $this->orders = $orders;
+        //
     }
 
     /**
@@ -24,6 +23,6 @@ class TabelTransaksi extends Component
      */
     public function render()
     {
-        return view('components.tabel-transaksi');
+        return view('components.tabel-user');
     }
 }

@@ -12,11 +12,9 @@
             </div>
             <div class="col col-md-6 flex align-items-stretch">
                 <div class="tab-content flex-fill" id="nav-tabContent">
-                    {{-- @for ($i = 0; $i < 1; $i++) --}}
                     @foreach ($orders as $order)
                     <x-card-order-detail :order=$order/>
                     @endforeach
-                    {{-- @endfor --}}
                 </div>
             </div>
         </div>

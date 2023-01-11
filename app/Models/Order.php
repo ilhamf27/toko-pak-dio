@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Kyslik\ColumnSortable\Sortable;
 
 class Order extends Model
 {
     use HasFactory;
+    use Sortable;
 
     public $incrementing = false;
 
@@ -23,8 +25,10 @@ class Order extends Model
     }
 
     protected $fillable = [
-        'delivery_address','user_id'
+        'delivery_address','user_id', 'created_at', 'grand_total'
     ];
+
+    public $sortable = ['status'];
 
     public function item_order()
     {
