@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
@@ -43,6 +44,7 @@ class UserController extends Controller
             'user_name' => 'required',
             'email' => 'required|email',
             'saldo' => 'required|integer',
+            'pass_user' => 'required',
             'is_admin' => 'required'
         ]);
 
@@ -51,7 +53,8 @@ class UserController extends Controller
                 'name' => $attributes['user_name'],
                 'email' => $attributes['email'],
                 'saldo' => $attributes['saldo'],
-                'is_admin' => $attributes['is_admin']
+                'is_admin' => $attributes['is_admin'] == 'On' ? true : false,
+                'password' => Hash::make($attributes['pass_user'])
             ]);
             return back()->with('success', 'Data User Berhasil Diedit!');
         }
@@ -69,7 +72,7 @@ class UserController extends Controller
             'name' => $attributes['user_name'],
             'email' => $attributes['email'],
             'saldo' => $attributes['saldo'],
-            'password' => 'password',
+            'password' => Hash::make($attributes['saldo']),
             'is_admin' => $attributes['is_admin'] == 'On' ? true : false
         ]);
 

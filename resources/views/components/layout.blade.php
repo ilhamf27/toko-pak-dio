@@ -63,6 +63,31 @@
         });
     }
 
+    const userModal = document.getElementById("userModal");
+    if (userModal) {
+        userModal.addEventListener("show.bs.modal", (event) => {
+            // Button that triggered the modal
+            const button = event.relatedTarget;
+            // Extract info from data-bs-* attributes
+            const recipient = button.getAttribute("data-bs-whatever");
+
+            const result = recipient.split(',');
+
+            // Update the modal's content.
+            if (recipient != "none") {
+                userModal.querySelector(".modal-body #user_id").value = result[0];
+                userModal.querySelector(".modal-body #user_name").value = result[1];
+                userModal.querySelector(".modal-body #email").value = result[2];
+                userModal.querySelector(".modal-body #saldo").value = result[3];
+                result[4] === true ? userModal.querySelector(".modal-body #is_admin").value = "On" : userModal.querySelector(".modal-body #is_admin").value = "Off";
+            }
+
+            const modalTitle = userModal.querySelector(".modal-title");
+            recipient == "none" ? modalTitle.textContent = `Tambah User Baru` : modalTitle.textContent =
+                `User Item`;
+        });
+    }
+
     const addModal = document.getElementById("addModal");
     if (addModal) {
         addModal.addEventListener("show.bs.modal", (event) => {

@@ -25,6 +25,11 @@
                             placeholder="name@example.com">
                             <label for="saldo">Saldo</label>
                         </div>
+                        <div class="form-floating mb-3 mx-2">
+                            <input type="password" class="form-control" id="pass_user" name="pass_user"
+                            placeholder="name@example.com">
+                            <label for="pass_user">Password</label>
+                        </div>
                         <div class="form-check form-switch mx-2">
                             <input class="form-check-input" type="checkbox" role="switch" id="is_admin" name="is_admin">
                             <label class="form-check-label" for="is_admin">Admin</label>
