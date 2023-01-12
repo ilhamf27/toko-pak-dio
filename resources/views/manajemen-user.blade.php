@@ -1,7 +1,7 @@
 <x-layout>
     <x-admin-navbar />
-    <x-flash />
     <div class="container">
-        <x-tabel-user />
+        <x-tabel-user :users=$users/>
     </div>
+    <x-flash />
 </x-layout>

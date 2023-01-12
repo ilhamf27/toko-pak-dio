@@ -4,17 +4,16 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class TabelUser extends Component
+class ModalUsers extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public $users;
-    public function __construct($users)
+    public function __construct()
     {
-        $this->users = $users;
+        //
     }
 
     /**
@@ -24,6 +23,6 @@ class TabelUser extends Component
      */
     public function render()
     {
-        return view('components.tabel-user');
+        return view('components.modal-users');
     }
 }

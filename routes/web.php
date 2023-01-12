@@ -4,6 +4,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItemOrderController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,7 +26,8 @@ Route::get('/home', [ItemController::class, 'index'])->name('home')->middleware(
 Route::get('/dashboard', [OrderController::class, 'dashboard'])->name('dashboard')->middleware('auth');
 
 Route::get('/riwayat', [OrderController::class, 'riwayat'])->middleware('auth');
-Route::get('/laporan', [OrderController::class, 'laporan'])->middleware('auth');
+Route::get('/laporan-harian', [OrderController::class, 'laporan'])->middleware('auth');
+Route::get('/laporan-bulanan', [OrderController::class, 'laporan'])->middleware('auth');
 Route::get('/stok', [ItemController::class, 'stok_item'])->middleware('auth');
 Route::get('/manajemen-user', [UserController::class, 'list_user'])->middleware('auth');
 
@@ -36,3 +38,9 @@ Route::patch('/delivered/{order}', [OrderController::class, 'dikirim'])->middlew
 Route::patch('/checkout/{order}', [OrderController::class, 'checkout'])->middleware('auth');
 Route::patch('/tambah-item/{item}', [OrderController::class, 'tambah_item'])->middleware('auth');
 Route::patch('/delete-item/{item_order}', [ItemOrderController::class, 'delete_item'])->middleware('auth');
+
+Route::post('/tambah/item', [ItemController::class, 'store'])->middleware('auth');
+Route::post('/tambah/stok', [ItemController::class, 'top_up'])->middleware('auth');
+
+Route::post('/tambah/saldo', [UserController::class, 'top_up'])->middleware('auth');
+Route::post('/tambah/user', [UserController::class, 'new_user'])->middleware('auth');

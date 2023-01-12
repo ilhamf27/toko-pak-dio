@@ -35,7 +35,57 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
 </script>
-<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script>
+    const itemModal = document.getElementById("itemModal");
+    if (itemModal) {
+        itemModal.addEventListener("show.bs.modal", (event) => {
+            // Button that triggered the modal
+            const button = event.relatedTarget;
+            // Extract info from data-bs-* attributes
+            const recipient = button.getAttribute("data-bs-whatever");
+
+            const result = recipient.split(',');
+
+            // Update the modal's content.
+            if (recipient != "none") {
+                itemModal.querySelector(".modal-body #item_id").value = result[0];
+                itemModal.querySelector(".modal-body #item_name").value = result[1];
+                itemModal.querySelector(".modal-body #stock").value = result[3];
+                itemModal.querySelector(".modal-body #price").value = result[4];
+                itemModal.querySelector(".modal-body #description").value = result[2];
+                itemModal.querySelector(".modal-body #stock").disabled=true;
+            }
+
+            const modalTitle = itemModal.querySelector(".modal-title");
+            recipient == "none" ? modalTitle.textContent = `Tambah Item Baru` : modalTitle.textContent =
+                `Edit Item`;
+        });
+    }
+
+    const addModal = document.getElementById("addModal");
+    if (addModal) {
+        addModal.addEventListener("show.bs.modal", (event) => {
+            // Button that triggered the modal
+            const button = event.relatedTarget;
+            // Extract info from data-bs-* attributes
+            const recipient = button.getAttribute("data-bs-whatever");
+
+            const result = recipient.split(',');
+
+            // Update the modal's content.
+            addModal.querySelector(".modal-body #item_name").value = result[2];
+            addModal.querySelector(".modal-body #item_id").value = result[1];
+
+            if(result[0] == "user"){
+                addModal.querySelector("#add_action").action = "/tambah/saldo";
+            }
+
+            const modalTitle = addModal.querySelector(".modal-title");
+            result[0] == "stok" ? modalTitle.textContent = `Tambah Stok Item` : modalTitle.textContent =
+                `Tambah Saldo User`;
+        });
+    }
 </script>
 
 </html>

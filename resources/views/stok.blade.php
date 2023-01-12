@@ -1,7 +1,7 @@
 <x-layout>
     <x-admin-navbar />
-    <x-flash />
     <div class="container">
-        <x-tabel-stok />
+        <x-tabel-stok :items=$items/>
     </div>
+    <x-flash />
 </x-layout>

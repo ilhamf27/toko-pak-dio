@@ -1,20 +1,10 @@
+@props(['reports'])
 <div class="card mt-8">
     <div class="card-header flex justify-content-between">
         <p class="fs-1">
-            <b>Laporan Penjualan</b>
+            <b>Laporan {{ Request::path() === 'laporan-harian' ? 'Harian' : 'Bulanan' }}</b>
         </p>
-        <form class="my-auto flex-fill" style="max-width: 30%">
-            <div class="d-flex">
-                <div class="input-group">
-                    <select class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-                        <option selected>Jenis Laporan</option>
-                        <option value="harian">Harian</option>
-                        <option value="bulanan">Bulanan</option>
-                    </select>
-                    <button class="btn btn-outline-secondary" type="button">Generate Laporan</button>
-                </div>
-            </div>
-        </form>
+
 
     </div>
     <div class="card-body">
@@ -30,14 +20,21 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Today</td>
-                    <td>12</td>
-                    <td>123</td>
-                    <td>123</td>
-                    <td>123</td>
-                </tr>
+                @if (count($reports) == 0)
+                    <tr>
+                        <td colspan="6">Tidak Ada Data</td>
+                    </tr>
+                @endif
+                @foreach ($reports as $report)
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>{{ $report->waktu }}</td>
+                        <td>{{ $report->jml_user }}</td>
+                        <td>{{ $report->jml_order }}</td>
+                        <td>{{ $report->jml_item }}</td>
+                        <td>Rp {{ number_format($report->pendapatan, 2, ',', '.') }}</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

@@ -11,9 +11,10 @@ class TabelStok extends Component
      *
      * @return void
      */
-    public function __construct()
+    public $items;
+    public function __construct($items)
     {
-        //
+        $this->items = $items;
     }
 
     /**

@@ -1,7 +1,7 @@
 <x-layout>
     <x-admin-navbar />
-    <x-flash />
     <div class="container">
-        <x-tabel-laporan />
+        <x-tabel-laporan :reports=$reports/>
     </div>
+    <x-flash />
 </x-layout>

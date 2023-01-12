@@ -12,10 +12,25 @@
                         href="/dashboard">Transaksi Penjualan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::path() === 'laporan' ? 'active' : '' }}" href="/laporan">Laporan Penjualan</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link {{ Request::path() === 'stok' ? 'active' : '' }}" href="/stok">Stok Item</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Laporan Penjualan
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="/laporan-harian">
+                                Laporan Harian
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/laporan-bulanan">
+                                Laporan Bulanan
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"

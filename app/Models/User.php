@@ -31,7 +31,7 @@ class User extends Authenticatable
     }
 
     protected $fillable = [
-        'name', 'email', 'password','saldo', 'is_admin'
+        'name', 'email', 'password','saldo', 'is_admin', 'username'
     ];
 
     /**
@@ -55,5 +55,13 @@ class User extends Authenticatable
     public function order()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? false, function ($query, $search) {
+            $query
+                ->where('name', 'like', '%' . $search . '%');
+        });
     }
 }

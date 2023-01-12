@@ -11,9 +11,10 @@ class TabelLaporan extends Component
      *
      * @return void
      */
-    public function __construct()
+    public $reports;
+    public function __construct($reports)
     {
-        //
+        $this->reports = $reports;
     }
 
     /**
