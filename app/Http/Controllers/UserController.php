@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
@@ -42,8 +43,8 @@ class UserController extends Controller
 
         $attributes = request()->validate([
             'user_id' => 'nullable',
-            'user_name' => 'required',
-            'email' => 'required|email',
+            'user_name' => ['required','min:3'],
+            'email' => ['required','email',Rule::unique('users','email')],
             'saldo' => 'nullable|integer',
             'pass_user' => 'nullable',
             'is_admin' => 'nullable'

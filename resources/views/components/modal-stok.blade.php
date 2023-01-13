@@ -15,20 +15,32 @@
                                 placeholder="name@example.com">
                             <label for="item_name">Nama</label>
                         </div>
+                        @error('item_name')
+                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
                         <div class="form-floating mb-3 mx-2">
                             <input type="number" class="form-control" id="stock" name="stock"
                             placeholder="name@example.com">
                             <label for="stock">Jumlah Stok</label>
                         </div>
+                        @error('stock')
+                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
                         <div class="form-floating mb-3 mx-2">
                             <input type="number" class="form-control" id="price" name="price"
                             placeholder="name@example.com">
                             <label for="price">Harga</label>
                         </div>
+                        @error('price')
+                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
                         <div class="form-floating mb-3 mx-2">
                             <textarea class="form-control" placeholder="Leave a comment here" id="description" name="description" style="height: 100px"></textarea>
                             <label for="description">Deskripsi</label>
                         </div>
+                        @error('description')
+                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
                 <div class="modal-footer">

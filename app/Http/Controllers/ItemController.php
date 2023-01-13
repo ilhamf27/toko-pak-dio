@@ -7,6 +7,7 @@ use App\Models\ItemOrder;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class ItemController extends Controller
 {
@@ -30,7 +31,7 @@ class ItemController extends Controller
     {
         $attributes = request()->validate([
             'item_id' => 'nullable',
-            'item_name' => 'required',
+            'item_name' => ['required','min:7',Rule::unique('items','name')],
             'stock' => 'required|integer|min:1',
             'price' => 'required|integer',
             'description' => 'required'

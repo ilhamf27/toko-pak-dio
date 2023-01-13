@@ -15,22 +15,36 @@
                                 placeholder="name@example.com">
                             <label for="user_name">Nama</label>
                         </div>
+                        @error('user_name')
+                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
                         <div class="form-floating mb-3 mx-2">
                             <input type="email" class="form-control" id="email" name="email"
                                 placeholder="name@example.com">
                             <label for="email">Email</label>
                         </div>
+                        @error('email')
+                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
                         <div class="form-floating mb-3 mx-2">
-                            <input type="number" class="form-control" id="saldo" name="saldo" placeholder="name@example.com">
+                            <input type="number" class="form-control" id="saldo" name="saldo"
+                                placeholder="name@example.com">
                             <label for="saldo">Saldo</label>
                         </div>
+                        @error('saldo')
+                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
                         <div class="form-floating mb-3 mx-2">
                             <input type="password" class="form-control" id="pass_user" name="pass_user"
-                            placeholder="name@example.com">
+                                placeholder="name@example.com">
                             <label for="pass_user">Password</label>
                         </div>
+                        @error('pass_user')
+                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
                         <div class="form-check form-switch mx-2">
-                            <input class="form-check-input" type="checkbox" role="switch" id="is_admin" name="is_admin">
+                            <input class="form-check-input" type="checkbox" role="switch" id="is_admin"
+                                name="is_admin">
                             <label class="form-check-label" for="is_admin">Admin</label>
                         </div>
                     </div>
