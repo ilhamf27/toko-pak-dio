@@ -3,6 +3,7 @@
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItemOrderController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -44,3 +45,6 @@ Route::post('/tambah/stok', [ItemController::class, 'top_up'])->middleware('auth
 
 Route::post('/tambah/saldo', [UserController::class, 'top_up'])->middleware('auth');
 Route::post('/tambah/user', [UserController::class, 'new_user'])->middleware('auth');
+
+Route::get('create-pdf-file/laporan-harian', [PDFController::class, 'indexOne']);
+Route::get('create-pdf-file/laporan-bulanan', [PDFController::class, 'indexTwo']);

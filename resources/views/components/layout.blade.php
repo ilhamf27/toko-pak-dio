@@ -54,7 +54,7 @@
                 itemModal.querySelector(".modal-body #stock").value = result[3];
                 itemModal.querySelector(".modal-body #price").value = result[4];
                 itemModal.querySelector(".modal-body #description").value = result[2];
-                itemModal.querySelector(".modal-body #stock").disabled=true;
+                // itemModal.querySelector(".modal-body #stock").disabled=true;
             }
 
             const modalTitle = itemModal.querySelector(".modal-title");
@@ -79,7 +79,9 @@
                 userModal.querySelector(".modal-body #user_name").value = result[1];
                 userModal.querySelector(".modal-body #email").value = result[2];
                 userModal.querySelector(".modal-body #saldo").value = result[3];
-                result[4] === true ? userModal.querySelector(".modal-body #is_admin").value = "On" : userModal.querySelector(".modal-body #is_admin").value = "Off";
+                // userModal.querySelector(".modal-body #is_admin").value = result[4];
+                result[4] == 1 ? userModal.querySelector(".modal-body #is_admin").checked=true : userModal.querySelector(".modal-body #is_admin").checked=false;
+                // userModal.querySelector(".modal-body #saldo").disabled=true;
             }
 
             const modalTitle = userModal.querySelector(".modal-title");

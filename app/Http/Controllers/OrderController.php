@@ -24,10 +24,12 @@ class OrderController extends Controller
 
     public function laporan()
     {
-        $url = str_ends_with(URL::current(),"laporan_harian") ? '%Y-%m-%d': '%Y-%m';
+        $url = (str_ends_with(URL::current(),"laporan-harian")) ? '%Y-%m-%d': '%Y-%m';
+
+        // ddd($url);
 
         return view('laporan', [
-            'reports' => Order::select(DB::raw('date_format(orders.created_at,"'.$url.'") as waktu, count(orders.user_id) as jml_user, count(orders.id) as jml_order, SUM(item_orders.qty) as jml_item, SUM(orders.grand_total) as pendapatan'))->join('item_orders', 'item_orders.order_id', '=', 'orders.id')->join('items', 'item_orders.item_id', '=', 'items.id')->groupBy('waktu')->get()
+            'reports' => Order::select(DB::raw('date_format(orders.created_at,"'.$url.'") as waktu, count(orders.user_id) as jml_user, count(orders.id) as jml_order, SUM(item_orders.qty) as jml_item, SUM(orders.grand_total) as pendapatan'))->join('item_orders', 'item_orders.order_id', '=', 'orders.id')->join('items', 'item_orders.item_id', '=', 'items.id')->where('orders.status','!=',null)->groupBy('waktu')->get()
         ]);
     }
 

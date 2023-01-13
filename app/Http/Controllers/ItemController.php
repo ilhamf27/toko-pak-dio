@@ -36,7 +36,7 @@ class ItemController extends Controller
             'description' => 'required'
         ]);
 
-        if($attributes['item_id'] != null){
+        if($attributes['item_id'] != "null"){
             Item::where('id', $attributes['item_id'])->update([
                 'name' => $attributes['item_name'],
                 'stock_qty' => $attributes['stock'],

@@ -39,23 +39,35 @@ class UserController extends Controller
 
     public function new_user()
     {
+
         $attributes = request()->validate([
             'user_id' => 'nullable',
             'user_name' => 'required',
             'email' => 'required|email',
-            'saldo' => 'required|integer',
-            'pass_user' => 'required',
-            'is_admin' => 'required'
+            'saldo' => 'nullable|integer',
+            'pass_user' => 'nullable',
+            'is_admin' => 'nullable'
         ]);
 
-        if ($attributes['user_id'] != null) {
-            User::where('id', $attributes['user_id'])->update([
-                'name' => $attributes['user_name'],
-                'email' => $attributes['email'],
-                'saldo' => $attributes['saldo'],
-                'is_admin' => $attributes['is_admin'] == 'On' ? true : false,
-                'password' => Hash::make($attributes['pass_user'])
-            ]);
+        if ($attributes['user_id'] != "null") {
+
+            if($attributes['pass_user'] != null){
+                User::where('id', $attributes['user_id'])->update([
+                    'name' => $attributes['user_name'],
+                    'email' => $attributes['email'],
+                    'saldo' => $attributes['saldo'],
+                    'is_admin' => count($attributes) > 5 ? true : false,
+                    'password' => Hash::make($attributes['pass_user'])
+                ]);
+            }else{
+                User::where('id', $attributes['user_id'])->update([
+                    'name' => $attributes['user_name'],
+                    'email' => $attributes['email'],
+                    'saldo' => $attributes['saldo'],
+                    'is_admin' => count($attributes) > 5 ? true : false
+                ]);
+            }
+
             return back()->with('success', 'Data User Berhasil Diedit!');
         }
 
@@ -72,8 +84,8 @@ class UserController extends Controller
             'name' => $attributes['user_name'],
             'email' => $attributes['email'],
             'saldo' => $attributes['saldo'],
-            'password' => Hash::make($attributes['saldo']),
-            'is_admin' => $attributes['is_admin'] == 'On' ? true : false
+            'password' => $attributes['pass_user'] == null ? Hash::make("password") : Hash::make($attributes['pass_user']),
+            'is_admin' => count($attributes) > 5 ? true : false
         ]);
 
         return back()->with('success', 'User Baru Berhasil Ditambahkan!');

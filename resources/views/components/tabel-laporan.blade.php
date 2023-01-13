@@ -4,7 +4,9 @@
         <p class="fs-1">
             <b>Laporan {{ Request::path() === 'laporan-harian' ? 'Harian' : 'Bulanan' }}</b>
         </p>
-
+        <form action="create-pdf-file/{{ Request::path() }}" method="get" class="my-auto">
+            <button class="btn btn-primary" type="submit">Download PDF</button>
+        </form>
 
     </div>
     <div class="card-body">
@@ -22,12 +24,16 @@
             <tbody>
                 @if (count($reports) == 0)
                     <tr>
-                        <td colspan="6">Tidak Ada Data</td>
+                        <td colspan="6" class="text-center">Tidak Ada Data</td>
                     </tr>
                 @endif
+                @php
+                    $increment = 0;
+                    $total_pendapatan = 0;
+                @endphp
                 @foreach ($reports as $report)
                     <tr>
-                        <th scope="row">1</th>
+                        <th scope="row">{{ $increment += 1 }}</th>
                         <td>{{ $report->waktu }}</td>
                         <td>{{ $report->jml_user }}</td>
                         <td>{{ $report->jml_order }}</td>
@@ -35,6 +41,17 @@
                         <td>Rp {{ number_format($report->pendapatan, 2, ',', '.') }}</td>
                     </tr>
                 @endforeach
+                @php
+                    foreach ($reports as $report) {
+                        $total_pendapatan = $total_pendapatan + $report->pendapatan;
+                    }
+                @endphp
+                @if ($increment > 1)
+                    <tr>
+                        <th colspan="5">Grand Total Pendapatan</th>
+                        <td>Rp {{ number_format($total_pendapatan, 2, ',', '.') }}</th>
+                    </tr>
+                @endif
             </tbody>
         </table>
     </div>
